@@ -1,0 +1,2 @@
+# Preserve exact release bytes so SHA256 checks also work on Windows clones.
+* -text

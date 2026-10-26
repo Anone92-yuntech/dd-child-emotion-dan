@@ -1,0 +1,17 @@
+{
+  "source_project": "DAN (AffectNet-pretrained, binary transfer)",
+  "original_experiment_script_sha256": "f3a9227bdc3f9064356b5f09c12178a67cf3e6930a742943e1f16e3861623b26",
+  "dataset_relocation_script_sha256": "21e9d07de5aaedb16b8dc7e7ed5039887a26aedfe5aa133b911dd949ed48bb2d",
+  "source_files": {
+    "emotion.py": "1e552311d4652fdb8c357147fddfd327952301e20f2c705be967e590bec8b445",
+    "original_run_experiment.py": "f3a9227bdc3f9064356b5f09c12178a67cf3e6930a742943e1f16e3861623b26",
+    "run_experiment.py": "21e9d07de5aaedb16b8dc7e7ed5039887a26aedfe5aa133b911dd949ed48bb2d",
+    "test_transfer.py": "463958a0b7cac085a7a1e67eb474232c12dd65b0db857d46cc29ee1f2c12496c",
+    "train_transfer.py": "77e3ef9b57fbe5f317d525944007fb4bc3be1681770a38fa8758e72a72b28691",
+    "verify_results.py": "669e5dbc5bd6c3f09e503fa16c12321f551fdab35aef20bbe0434e4a0756da89"
+  },
+  "network_sha256": "75f2cf16876e16f100ab483f2665726da1bff8a815cd2a2e2e83443950c34515",
+  "checkpoint_sha256": "fccef63f6464c678852224f7cbf24c9c6fb9b9e682f0fd15f774ec7df4b245b3",
+  "adaptation_note": "Portable CLI paths, CPU inference, pinned source-pretrained SHA, and separate new output directory; numerical training protocol unchanged. Original source snapshots are retained without modification. Raw datasets, per-image predictions and private manifests are excluded.",
+  "portable_script_sha256": "2210420517ac6f4ecbebfd7ec1c9bbf9465ef26072b46995b5e21e9f227bef8f"
+}

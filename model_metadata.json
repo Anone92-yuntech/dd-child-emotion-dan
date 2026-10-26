@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "model_config": {
+    "model_name": "DAN",
+    "num_class": 2,
+    "num_head": 4
+  },
+  "label_mapping": {
+    "0": "neutral",
+    "1": "positive"
+  },
+  "decision_threshold": 0.5,
+  "decision_operator": ">",
+  "checkpoint_file": "best_transfer_model.pth",
+  "checkpoint_sha256": "fccef63f6464c678852224f7cbf24c9c6fb9b9e682f0fd15f774ec7df4b245b3",
+  "image_preprocess": {
+    "size": [
+      224,
+      224
+    ],
+    "resize": "PIL bilinear",
+    "rgb": true,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "enhancement": "none"
+  },
+  "selected_checkpoint": {
+    "stage": 2,
+    "stage_epoch": 15,
+    "global_epoch": 20,
+    "criterion": "earliest maximum validation positive F1 in stage2"
+  },
+  "training": {
+    "seed": 42,
+    "batch_size": 32,
+    "stage1_epochs": 5,
+    "stage2_epochs": 15,
+    "stage1_lr": 0.001,
+    "stage2_lr": 1e-05,
+    "num_workers": 4,
+    "num_heads": 4,
+    "image_size": 224,
+    "loss": "CrossEntropyLoss",
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "amp": false,
+    "train_augmentation": "Resize224, HFlip0.5, Rotation10, ColorJitter(brightness=.2,contrast=.2)",
+    "normalization": {
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ]
+    },
+    "selection": "maximum validation positive F1 across stage2 only; earliest epoch wins ties",
+    "stage_transition": "last stage1 epoch to stage2, matching HSEmotion",
+    "warmup_batchnorm": "all running statistics update in model.train(), matching HSEmotion; only fc/bn parameters train",
+    "baseline": "happy logit(index1) > neutral logit(index0); other five classes ignored, matching HSEmotion pairwise rule",
+    "binary_decision": "positive if p_positive > 0.5; ties are neutral",
+    "test_policy": "baseline before training; final model selected on validation only, one final test; no threshold tuning",
+    "sample_policy": "all CSV rows retained including blendshape_valid=0; blendshapes not used",
+    "precision": "float32; TF32 disabled",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true
+  },
+  "reference_results": {
+    "validation": {
+      "n": 3470,
+      "accuracy": 0.9515850144092219,
+      "positive_precision": 0.742014742014742,
+      "positive_recall": 0.8273972602739726,
+      "positive_f1": 0.7823834196891192,
+      "macro_f1": 0.877573032801758,
+      "roc_auc": 0.9518911168464474,
+      "average_precision": 0.8303951311349839,
+      "tn": 3000,
+      "fp": 105,
+      "fn": 63,
+      "tp": 302,
+      "confusion_matrix": [
+        [
+          3000,
+          105
+        ],
+        [
+          63,
+          302
+        ]
+      ],
+      "threshold": 0.5,
+      "decision_operator": ">",
+      "classification_report": {
+        "neutral": {
+          "precision": 0.9794319294809011,
+          "recall": 0.966183574879227,
+          "f1-score": 0.9727626459143969,
+          "support": 3105.0
+        },
+        "positive": {
+          "precision": 0.742014742014742,
+          "recall": 0.8273972602739726,
+          "f1-score": 0.7823834196891192,
+          "support": 365.0
+        },
+        "accuracy": 0.9515850144092219,
+        "macro avg": {
+          "precision": 0.8607233357478216,
+          "recall": 0.8967904175765998,
+          "f1-score": 0.877573032801758,
+          "support": 3470.0
+        },
+        "weighted avg": {
+          "precision": 0.9544586518367661,
+          "recall": 0.9515850144092219,
+          "f1-score": 0.9527371653460319,
+          "support": 3470.0
+        }
+      },
+      "loss": 0.18439606197972805
+    },
+    "test": {
+      "n": 4293,
+      "accuracy": 0.9345446075005823,
+      "positive_precision": 0.7331081081081081,
+      "positive_recall": 0.7791741472172352,
+      "positive_f1": 0.7554395126196692,
+      "macro_f1": 0.8588277299551217,
+      "roc_auc": 0.9599433336280702,
+      "average_precision": 0.7780134551238627,
+      "tn": 3578,
+      "fp": 158,
+      "fn": 123,
+      "tp": 434,
+      "confusion_matrix": [
+        [
+          3578,
+          158
+        ],
+        [
+          123,
+          434
+        ]
+      ],
+      "threshold": 0.5,
+      "decision_operator": ">",
+      "classification_report": {
+        "neutral": {
+          "precision": 0.9667657389894623,
+          "recall": 0.9577087794432548,
+          "f1-score": 0.9622159472905741,
+          "support": 3736.0
+        },
+        "positive": {
+          "precision": 0.7331081081081081,
+          "recall": 0.7791741472172352,
+          "f1-score": 0.7554395126196692,
+          "support": 557.0
+        },
+        "accuracy": 0.9345446075005823,
+        "macro avg": {
+          "precision": 0.8499369235487853,
+          "recall": 0.8684414633302451,
+          "f1-score": 0.8588277299551217,
+          "support": 4293.0
+        },
+        "weighted avg": {
+          "precision": 0.9364495730446885,
+          "recall": 0.9345446075005823,
+          "f1-score": 0.9353875116717308,
+          "support": 4293.0
+        }
+      },
+      "loss": 0.2061889398710283
+    }
+  },
+  "dataset_counts": {
+    "train": {
+      "neutral": 2299,
+      "positive": 2299,
+      "total": 4598
+    },
+    "validation": {
+      "neutral": 3105,
+      "positive": 365,
+      "total": 3470
+    },
+    "test": {
+      "neutral": 3736,
+      "positive": 557,
+      "total": 4293
+    }
+  },
+  "subject_split": "User confirms different children across train, validation and test; filenames are not independent identity verification",
+  "source_pretrained_sha256": "3189a13f28592c20ce9b9dd57e457caabf6a7bb80c36df94d3d0348829cec752",
+  "official_code": "https://github.com/yaoing/DAN",
+  "official_source_commit": "fea9a093bc7c44ee3f08dd00310516b6e5a92c09",
+  "model_distribution": {
+    "repository": "Anone92-yuntech/dd-child-emotion-dan",
+    "release": "v1.0.0",
+    "asset": "best_transfer_model.pth"
+  },
+  "limitations": [
+    "Single seed; previously evaluated test split; not a new external cohort",
+    "No claim of exact numerical reproduction across PyTorch versions, devices or batch sizes",
+    "Input requires cropped faces; no face detection or temporal smoothing"
+  ]
+}

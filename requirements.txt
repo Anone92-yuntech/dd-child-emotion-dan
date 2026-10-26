@@ -1,0 +1,9 @@
+# Install a compatible PyTorch/torchvision pair for the target CPU or CUDA runtime.
+# Exact historical versions are recorded separately in the environment metadata.
+torch>=2.6
+torchvision>=0.21
+Pillow
+numpy
+pandas
+matplotlib
+scikit-learn
