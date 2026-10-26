@@ -1,0 +1,98 @@
+{
+  "stage": 2,
+  "epoch": 15,
+  "global_epoch": 20,
+  "validation_metrics": {
+    "n": 3470,
+    "accuracy": 0.9515850144092219,
+    "positive_precision": 0.742014742014742,
+    "positive_recall": 0.8273972602739726,
+    "positive_f1": 0.7823834196891192,
+    "macro_f1": 0.877573032801758,
+    "roc_auc": 0.9518911168464474,
+    "average_precision": 0.8303951311349839,
+    "tn": 3000,
+    "fp": 105,
+    "fn": 63,
+    "tp": 302,
+    "confusion_matrix": [
+      [
+        3000,
+        105
+      ],
+      [
+        63,
+        302
+      ]
+    ],
+    "threshold": 0.5,
+    "decision_operator": ">",
+    "classification_report": {
+      "neutral": {
+        "precision": 0.9794319294809011,
+        "recall": 0.966183574879227,
+        "f1-score": 0.9727626459143969,
+        "support": 3105.0
+      },
+      "positive": {
+        "precision": 0.742014742014742,
+        "recall": 0.8273972602739726,
+        "f1-score": 0.7823834196891192,
+        "support": 365.0
+      },
+      "accuracy": 0.9515850144092219,
+      "macro avg": {
+        "precision": 0.8607233357478216,
+        "recall": 0.8967904175765998,
+        "f1-score": 0.877573032801758,
+        "support": 3470.0
+      },
+      "weighted avg": {
+        "precision": 0.9544586518367661,
+        "recall": 0.9515850144092219,
+        "f1-score": 0.9527371653460319,
+        "support": 3470.0
+      }
+    },
+    "loss": 0.18439606197972805
+  },
+  "sha256": "fccef63f6464c678852224f7cbf24c9c6fb9b9e682f0fd15f774ec7df4b245b3",
+  "config": {
+    "seed": 42,
+    "batch_size": 32,
+    "stage1_epochs": 5,
+    "stage2_epochs": 15,
+    "stage1_lr": 0.001,
+    "stage2_lr": 1e-05,
+    "num_workers": 4,
+    "num_heads": 4,
+    "image_size": 224,
+    "loss": "CrossEntropyLoss",
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "amp": false,
+    "train_augmentation": "Resize224, HFlip0.5, Rotation10, ColorJitter(brightness=.2,contrast=.2)",
+    "normalization": {
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ]
+    },
+    "selection": "maximum validation positive F1 across stage2 only; earliest epoch wins ties",
+    "stage_transition": "last stage1 epoch to stage2, matching HSEmotion",
+    "warmup_batchnorm": "all running statistics update in model.train(), matching HSEmotion; only fc/bn parameters train",
+    "baseline": "happy logit(index1) > neutral logit(index0); other five classes ignored, matching HSEmotion pairwise rule",
+    "binary_decision": "positive if p_positive > 0.5; ties are neutral",
+    "test_policy": "baseline before training; final model selected on validation only, one final test; no threshold tuning",
+    "sample_policy": "all CSV rows retained including blendshape_valid=0; blendshapes not used",
+    "precision": "float32; TF32 disabled",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true
+  }
+}
